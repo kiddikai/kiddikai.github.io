@@ -5,10 +5,62 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Checkbox</title>
+  <script type="module">
+      import {Checkboxland} from 'https://unpkg.com/checkboxland?module';
+
+      window.Checkboxland = Checkboxland;
+
+      const boxPos = {x: 1, y: 1};
+      const boxSize = 7;
+      let boxChecked = false;
+
+      let draw = (boxChecked, cbl) => {
+          cbl.clearData();
+
+          let checkboxData = boxChecked ? [
+              [0, 1, 1, 1, 1, 1, 0],
+              [1, 1, 1, 1, 1, 1, 1],
+              [1, 1, 1, 1, 1, 0, 1],
+              [1, 1, 1, 1, 0, 1, 1],
+              [1, 0, 1, 0, 1, 1, 1],
+              [1, 1, 0, 1, 1, 1, 1],
+              [0, 1, 1, 1, 1, 1, 0],
+          ] : [
+              [0, 1, 1, 1, 1, 1, 0],
+              [1, 0, 0, 0, 0, 0, 1],
+              [1, 0, 0, 0, 0, 0, 1],
+              [1, 0, 0, 0, 0, 0, 1],
+              [1, 0, 0, 0, 0, 0, 1],
+              [1, 0, 0, 0, 0, 0, 1],
+              [0, 1, 1, 1, 1, 1, 0],
+          ];
+
+          for (let x = 0; x < boxSize; x++) {
+              for (let y = 0; y < boxSize; y++) {
+                  cbl.setCheckboxValue(x + boxPos.x, y + boxPos.y, checkboxData[y][x]);
+              }
+          }
+
+          cbl.print("Check", {x: 10, y: 1});
+      }
+
+      const cbl = new Checkboxland({
+          dimensions: '39x9',
+          selector: '#cbl'
+      });
+
+      draw(false, cbl);
+
+      cbl.onClick(event => {
+          boxChecked = !boxChecked;
+          draw(boxChecked, cbl);
+      });
+
+  </script>
 </head>
 <body>
 
-
+<div id="cbl"></div>
 
 </body>
 </html>
